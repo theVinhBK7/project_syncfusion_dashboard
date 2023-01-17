@@ -45,3 +45,24 @@
 .e-input-group:not(.e-float-icon-left), .e-input-group.e-success:not(.e-float-icon-left), .e-input-group.e-warning:not(.e-float-icon-left), .e-input-group.e-error:not(.e-float-icon-left), .e-input-group.e-control-wrapper:not(.e-float-icon-left), .e-input-group.e-control-wrapper.e-success:not(.e-float-icon-left), .e-input-group.e-control-wrapper.e-warning:not(.e-float-icon-left), .e-input-group.e-control-wrapper.e-error:not(.e-float-icon-left){
   border: none;
 }
+
+.voice-recorder {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+}
+
+.title {
+  margin-bottom: 2rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.recorder-container {
+  min-width: 300px;
+  width: 30vw;
+  height: 70vh;
+  border-radius: 1rem;
+  background: linear-gradient(to right, #41295a, #2f0743);
+  color: #fff;
+}
