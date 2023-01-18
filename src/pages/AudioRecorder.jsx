@@ -1,110 +1,130 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import AudioAnalyser from "react-audio-analyser";
 import axios from "axios";
 import { Button } from "../components";
-import { useStateContext } from "../contexts/ContextProvider";
 
-function AudioRecorder() {
-
-  const [status, setStatus] = useState("");
-  const [audioType, setAudioType] = useState("");
-  const [audioSrc, setAudioSrc] = useState("");
-  const { currentColor, currentMode } = useStateContext();
-
-  const controlAudio = (value) => {
-    setStatus(value);
+export default class AudioRecorder extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      status: "",
+      
+    };
   }
 
-  const changeScheme = (e) => {
-    console.log(e)
-    setAudioType(e.target.value);
+  controlAudio(status) {
+    this.setState({
+      status
+    });
   }
 
-  const componentDidMount = (e) => {
-    setAudioType("audio/wav");
+  changeScheme(e) {
+    this.setState({
+      audioType: e.target.value
+    });
   }
 
-  const audioProps = {
-    audioType,
-    status,
-    audioSrc,
-    timeslice: 1000,
-    startCallback: (e) => {
-      console.log("succ start", e);
-    },
-    pauseCallback: (e) => {
-      console.log("succ pause", e);
-    },
-    stopCallback: (e) => {
-      console.log("succ stop", e);
-      setAudioSrc(window.URL.createObjectURL(e));
+  componentDidMount() {
+    this.setState({
+      audioType: "audio/wav"
+    });
+  }
 
-      var wavefilefromblob = new File([e], 'test0117.wav');
-      var formData = new FormData();
+  render() {
+    const { status, audioSrc, audioType } = this.state;
+    const audioProps = {
+      audioType,
+      // audioOptions: {sampleRate: 30000}, // 设置输出音频采样率
+      status,
+      audioSrc,
+      timeslice: 1000, // timeslice（https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#Parameters）
+      startCallback: e => {
+        console.log("succ start", e);
+      },
+      pauseCallback: e => {
+        console.log("succ pause", e);
+      },
+      stopCallback: e => {
+        this.setState({
+          audioSrc: window.URL.createObjectURL(e)
+        });
+        console.log("succ stop", e);
+        let name = String(Math.floor(Math.random() * 100) + 1) + '.wav'
+        var wavefilefromblob = new File([e], name);
+        var formData = new FormData();
 
-      formData.append("file", wavefilefromblob);
-      formData.append("token", "2qx7bwae6l6x08m0yz7xwhtjqvisb3be7xberhl6ky7t6rd586");
-      axios.post('http://10.91.13.139:9090/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+        formData.append("file", wavefilefromblob);
+        formData.append("token", "h95wd0cv7h0zydnhr2kcf01w7bfs6h8wegj7gav6ofqgtp6yd8");
+        formData.append("enable_lm", 1);
+        formData.append("denoise", 0);
+        formData.append("keyframe", 0);
+        formData.append("model", " ");
 
-    },
-    onRecordCallback: (e) => {
-      console.log("recording", e);
-    },
-    errorCallback: (err) => {
-      console.log("error", err);
-    }
-  };
+        axios.post('http://10.91.13.139:9090/stt', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(
+          response => {
+            // console.log(response);
+            this.props.setMessages(messages => (
+              [...messages, response.data.result]
+              ));
+          }
+        )
 
-  return (
-    <div>
-      <AudioAnalyser {...audioProps}>
-        <div className="btn-box">
-          <div onClick={() => controlAudio("recording")}>
-            <Button
-              color="white"
-              bgColor={currentColor}
-              text="Start"
-              borderRadius="10px"
-            />
+      },
+      onRecordCallback: e => {
+        console.log("recording", e);
+      },
+      errorCallback: err => {
+        console.log("error", err);
+      },
+      backgroundColor: "rgba(237, 247, 249, 1)",
+      strokeColor: "#03C9D7"
+    };
+    return (
+      <div>
+        <AudioAnalyser {...audioProps}>
+          <div className="btn-box">
+            <div onClick={() => this.controlAudio("recording")}>
+              <Button
+                color="white"
+                bgColor={this.props.currentColor}
+                text="Start"
+                borderRadius="10px"
+              />
+            </div>
+            <div onClick={() => this.controlAudio("paused")}>
+              <Button
+                  color="white"
+                  bgColor={this.props.currentColor}
+                  text="Pause"
+                  borderRadius="10px"
+                />
+            </div>
+            <div onClick={() => this.controlAudio("inactive")}>
+              <Button
+                  color="white"
+                  bgColor={this.props.currentColor}
+                  text="Stop"
+                  borderRadius="10px"
+                />
+            </div>
           </div>
-
-          <div onClick={() => controlAudio("paused")}>
-            <Button
-              color="white"
-              bgColor={currentColor}
-              text="Pause"
-              borderRadius="10px"
-            />
-          </div>
-
-          <i onClick={() => controlAudio("inactive")}>
-            <Button
-              color="white"
-              bgColor={currentColor}
-              text="Stop"
-              borderRadius="10px"
-            />
-          </i>
-
-        </div>
-      </AudioAnalyser>
-      <p>choose output type</p>
-      <select
-        name=""
-        id=""
-        onChange={e => changeScheme(e)}
-        value={audioType}
-      >
-        <option value="audio/webm">audio/webm（default）</option>
-        <option value="audio/wav">audio/wav</option>
-        <option value="audio/mp3">audio/mp3</option>
-      </select>
-    </div>
-  )
+        </AudioAnalyser>
+        <p>choose output type</p>
+        <select
+          name=""
+          id=""
+          onChange={e => this.changeScheme(e)}
+          value={audioType}
+        >
+          <option value="audio/webm">audio/webm（default）</option>
+          <option value="audio/wav">audio/wav</option>
+          <option value="audio/mp3">audio/mp3</option>
+        </select>
+      </div>
+    );
+  }
 }
-
-export default AudioRecorder
