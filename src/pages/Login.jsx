@@ -21,6 +21,7 @@ const Login = () => {
             console.log(response);
             if (response.status === "Login success"){
                 setUserToken(response.token)
+                sessionStorage.setItem("accessToken",response.token);
                 navigate("/")
             }
         }).catch(function (error) {

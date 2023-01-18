@@ -12,9 +12,17 @@ import "./style.scss";
 import { useStateContext } from './contexts/ContextProvider';
 
 const App = () => {
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, userToken } = useStateContext();
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, userToken, setUserToken } = useStateContext();
   // const { currentUser } = useContext(AuthContext);
-  const currentUser = userToken;
+  
+  let currentUser = ""
+  if ( sessionStorage.getItem("accessToken") === null){
+    currentUser = userToken;
+  }
+  else{
+    currentUser = sessionStorage.getItem("accessToken");
+    setUserToken(currentUser);
+  }
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -95,8 +103,6 @@ const App = () => {
                     <Route path="/color-mapping" element={<ColorMapping />} />
                     <Route path="/pyramid" element={<Pyramid />} />
                     <Route path="/stacked" element={<Stacked />} />
-
-
                   </Routes>
                 </div>
                 <Footer />
