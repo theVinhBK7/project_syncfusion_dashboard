@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AudioAnalyser from "react-audio-analyser";
 import axios from "axios";
 import { Button } from "../components";
+import { speechToText } from "../apis/api";
 
 export default class AudioRecorder extends Component {
   constructor(props) {
@@ -54,21 +55,17 @@ export default class AudioRecorder extends Component {
         var formData = new FormData();
 
         formData.append("file", wavefilefromblob);
-        formData.append("token", "h95wd0cv7h0zydnhr2kcf01w7bfs6h8wegj7gav6ofqgtp6yd8");
+        formData.append("token", this.props.userToken);
         formData.append("enable_lm", 1);
         formData.append("denoise", 0);
         formData.append("keyframe", 0);
         formData.append("model", " ");
 
-        axios.post('http://10.91.13.139:9090/stt', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(
+        speechToText(formData).then(
           response => {
             // console.log(response);
             this.props.setMessages(messages => (
-              [...messages, response.data.result]
+              [...messages, response.result]
               ));
           }
         )
