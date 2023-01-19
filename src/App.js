@@ -4,7 +4,7 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { Overview, Orders, Calendar, Employees, Stacked, Pyramid, Customers, Kanban, Line, Area, Bar, Pie, Financial, ColorPicker, ColorMapping, Editor, Record } from './pages';
+import { Overview, Orders, Calendar, Employees, Stacked, Pyramid, Customers, Kanban, Line, Area, Bar, Pie, Financial, ColorPicker, ColorMapping, Editor, Record, Upload } from './pages';
 import Login from './pages/Login';
 import './App.css';
 import "./style.scss";
@@ -91,6 +91,7 @@ const App = () => {
                     <Route path="/kanban" element={<Kanban />} />
                     <Route path="/editor" element={<Editor />} />
                     <Route path="/record" element={<Record />} />
+                    <Route path="/upload" element={<Upload />} />
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/color-picker" element={<ColorPicker />} />
 
@@ -111,7 +112,7 @@ const App = () => {
           </>
         ) : (
           <Routes>
-            <Route path="/" element={<Navigate replace to="/login" />} />
+            <Route path="*" element={<Navigate replace to="/login" />} />
             <Route path="login" element={<Login />} />
           </Routes>
         )}
