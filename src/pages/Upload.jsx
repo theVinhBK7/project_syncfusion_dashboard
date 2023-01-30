@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { HtmlEditor, Image, Inject, Link, QuickToolbar, RichTextEditorComponent, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
 import { Header } from '../components';
 import { useStateContext } from '../contexts/ContextProvider';
 import Message from '../components/Message';
-import uploadFilesService from '../services/upload-files.service';
 import { speechToText, checkValidToken } from '../apis/api';
 
 function Upload() {
@@ -11,7 +9,6 @@ function Upload() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [currentFile, setCurrentFile] = useState("");
   const [progress, setProgress] = useState([]);
-  const [fileInfos, setFileInfos] = useState([]);
   const [uploadMessage, setUploadMessage] = useState([]);
   const { userToken } = useStateContext();
 
