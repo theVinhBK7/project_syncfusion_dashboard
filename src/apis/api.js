@@ -15,6 +15,16 @@ export const speechToText = async (formData) => {
     })
 }
 
+export const logout = async (data) => {
+  const url = "/logout";
+  return axios.post(url, JSON.stringify(data),{
+    headers: {
+      // Overwrite Axios's automatically set Content-Type
+      'Content-Type': 'application/json'
+    }
+  });
+}
+
 axios.interceptors.response.use(response => {
   return response;
 }, error => {

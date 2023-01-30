@@ -5,9 +5,15 @@ import { Button } from '.';
 import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 import avatar from '../data/avatar.jpg';
+import { logout } from '../apis/api';
 
 const UserProfile = () => {
   const { currentColor } = useStateContext();
+
+  function logoutHandle() {
+    console.log('logging out')
+    logout(sessionStorage.getItem("accessToken"));
+  }
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -51,7 +57,7 @@ const UserProfile = () => {
           </div>
         ))}
       </div>
-      <div className="mt-5">
+      <div className="mt-5" onClick={logoutHandle}>
         <Button
           color="white"
           bgColor={currentColor}
