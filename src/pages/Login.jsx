@@ -16,13 +16,17 @@ const Login = () => {
     const username = e.target[0].value;
     const password = e.target[1].value;
 
+    localStorage.setItem("username",username);
+
     try {
         loginAPI({ username: username, password: password }).then(function (response) {
             console.log(response);
-            if (response.status === "Login success"){
-                setUserToken(response.token)
-                sessionStorage.setItem("accessToken",response.token);
-                navigate("/")
+            if (response.Success === "Login success"){
+              console.log("setting token");
+              localStorage.setItem("accessToken",response.token);
+              setUserToken(response.token);                
+              console.log(localStorage.getItem("accessToken"));
+              navigate("/");
             }
         }).catch(function (error) {
             console.log(error);

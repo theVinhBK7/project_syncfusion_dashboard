@@ -6,13 +6,21 @@ import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 import avatar from '../data/avatar.jpg';
 import { logout } from '../apis/api';
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const { currentColor } = useStateContext();
+  const { setUserToken } = useStateContext();
+  const navigate = useNavigate();
+  const username = localStorage.getItem("username");
 
   function logoutHandle() {
-    console.log('logging out')
-    logout(sessionStorage.getItem("accessToken"));
+    console.log('logging out');
+    logout(localStorage.getItem("accessToken"));
+    navigate("/login");
+    localStorage.setItem("accessToken","")
+    setUserToken("");
+    
   }
 
   return (
@@ -34,12 +42,12 @@ const UserProfile = () => {
           alt="user-profile"
         />
         <div>
-          <p className="font-semibold text-xl dark:text-gray-200"> Michael Roberts </p>
+          <p className="font-semibold text-xl dark:text-gray-200"> {username} </p>
           <p className="text-gray-500 text-sm dark:text-gray-400">  Administrator   </p>
-          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> info@shop.com </p>
+          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> abc@gmail.com </p>
         </div>
       </div>
-      <div>
+      {/* <div>
         {userProfileData.map((item, index) => (
           <div key={index} className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#42464D]">
             <button
@@ -56,7 +64,7 @@ const UserProfile = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
       <div className="mt-5" onClick={logoutHandle}>
         <Button
           color="white"

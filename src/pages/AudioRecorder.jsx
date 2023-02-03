@@ -65,7 +65,7 @@ export default class AudioRecorder extends Component {
           response => {
             // console.log(response);
             this.props.setMessages(messages => (
-              [...messages, response.result]
+              [...messages, response.Result]
               ));
           }
         )
@@ -110,17 +110,6 @@ export default class AudioRecorder extends Component {
             </div>
           </div>
         </AudioAnalyser>
-        <p>choose output type</p>
-        <select
-          name=""
-          id=""
-          onChange={e => this.changeScheme(e)}
-          value={audioType}
-        >
-          <option value="audio/webm">audio/webm（default）</option>
-          <option value="audio/wav">audio/wav</option>
-          <option value="audio/mp3">audio/mp3</option>
-        </select>
       </div>
     );
   }

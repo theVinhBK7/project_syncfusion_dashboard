@@ -1,5 +1,6 @@
 .formContainer {
-  background-color: #a7bcff;
+  background-image: url("data/backGround.jpg");
+  background-size: cover; 
   height: 100vh;
   display: flex;
   align-items: center;
@@ -15,7 +16,7 @@
     align-items: center;
 
     .logo {
-      color: #5d5b8d;
+      color: #5c5b8d;
       font-weight: bold;
       font-size: 24px;
 

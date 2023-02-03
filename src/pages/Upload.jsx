@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { Header } from '../components';
+import { Header, Button} from '../components';
 import { useStateContext } from '../contexts/ContextProvider';
 import Message from '../components/Message';
-import { speechToText, checkValidToken } from '../apis/api';
+import { speechToText } from '../apis/api';
 
 function Upload() {
   const [messages, setMessages] = useState([]);
@@ -10,11 +10,8 @@ function Upload() {
   const [currentFile, setCurrentFile] = useState("");
   const [progress, setProgress] = useState([]);
   const [uploadMessage, setUploadMessage] = useState([]);
-  const { userToken } = useStateContext();
-
-  useEffect(() => {
-    checkValidToken({token:'abc'});
-  });
+  const { currentColor } = useStateContext();
+  const userToken = localStorage.getItem("accessToken");
 
   function selectFile(event) {
     setSelectedFiles(event.target.files);
@@ -37,7 +34,11 @@ function Upload() {
 
     speechToText(formData, userToken)
       .then((response) => {
-        setUploadMessage(response.data.message);
+        // setUploadMessage(response.data.message);
+          // console.log(response);
+          setMessages(messages => (
+            [...messages, response.Result]
+            ));
         // return uploadFilesService.getFiles();
       })
       .then((files) => {
@@ -56,7 +57,7 @@ function Upload() {
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
     <Header category="App" title="Upload" />
     <div>
-        {currentFile && (
+        {/* {currentFile && (
           <div className="progress">
             <div
               className="progress-bar progress-bar-info progress-bar-striped"
@@ -69,18 +70,21 @@ function Upload() {
               {progress}%
             </div>
           </div>
-        )}
+        )} */}
 
-        <label className="btn btn-default">
+        <label style={{backgroundColor:"#EDF7F9"}}>
           <input type="file" onChange={(event) => selectFile(event)} />
         </label>
 
-        <button className="btn btn-success"
-          disabled={!selectedFiles}
-          onClick={upload}
-        >
-          Upload
-        </button>
+        <div onClick={upload} style={{padding:"10px"}}>
+          <Button
+            color="white"
+            bgColor={currentColor}
+            text="Upload"
+            borderRadius="10px"
+            disabled={!selectedFiles}
+          />
+        </div>
 
         <div className="alert alert-light" role="alert">
           {uploadMessage}

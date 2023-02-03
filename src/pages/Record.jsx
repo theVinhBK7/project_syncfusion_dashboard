@@ -8,8 +8,9 @@ import Message from '../components/Message';
 
 function Record() {
   
-  const { currentColor, currentMode, userToken } = useStateContext();
+  const { currentColor, currentMode } = useStateContext();
   const [messages, setMessages] = useState([]);
+  const userToken = localStorage.getItem("accessToken");
 
   console.log(messages)
   
