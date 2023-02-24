@@ -13,7 +13,7 @@ const Register = () => {
 
     try {
         registerAPI({ username: username, password: password }).then(function (response) {
-            console.log(response);
+
         }).catch(function (error) {
             console.log(error);
         });

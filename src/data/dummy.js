@@ -433,6 +433,18 @@ export const customersGrid = [
 
 ];
 
+export const audioGrid = [
+  { type: 'checkbox', width: '50' },
+  { headerText: 'Name',
+    width: '150',
+    template: customerGridImage,
+    textAlign: 'Center' },
+  { field: 'ProjectName',
+    headerText: 'Project Name',
+    width: '150',
+    textAlign: 'Center' }
+];
+
 export const employeesGrid = [
   { headerText: 'Employee',
     width: '150',
@@ -487,16 +499,6 @@ export const links = [
       },
     ],
   },
-
-  {
-    title: 'Pages',
-    links: [
-      {
-        name: 'AudioList',
-        icon: <RiContactsLine />,
-      },
-    ],
-  }
 ];
 
 export const cartData = [
@@ -859,6 +861,8 @@ export const ordersGrid = [
     textAlign: 'Center',
   },
 ];
+
+
 
 export const customersData = [
   {

@@ -20,16 +20,13 @@ const Login = () => {
 
     try {
         loginAPI({ username: username, password: password }).then(function (response) {
-            console.log(response);
             if (response.Success === "Login success"){
-              console.log("setting token");
               localStorage.setItem("accessToken",response.token);
               setUserToken(response.token);                
-              console.log(localStorage.getItem("accessToken"));
               navigate("/");
             }
         }).catch(function (error) {
-            console.log(error);
+
         });
     
     } catch (err) {

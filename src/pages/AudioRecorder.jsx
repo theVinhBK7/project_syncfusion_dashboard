@@ -40,16 +40,13 @@ export default class AudioRecorder extends Component {
       audioSrc,
       timeslice: 1000, // timeslice（https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#Parameters）
       startCallback: e => {
-        console.log("succ start", e);
       },
       pauseCallback: e => {
-        console.log("succ pause", e);
       },
       stopCallback: e => {
         this.setState({
           audioSrc: window.URL.createObjectURL(e)
         });
-        console.log("succ stop", e);
         let name = String(Math.floor(Math.random() * 100) + 1) + '.wav'
         var wavefilefromblob = new File([e], name);
         var formData = new FormData();
@@ -63,7 +60,6 @@ export default class AudioRecorder extends Component {
 
         speechToText(formData).then(
           response => {
-            // console.log(response);
             this.props.setMessages(messages => (
               [...messages, response.Result]
               ));
@@ -72,10 +68,10 @@ export default class AudioRecorder extends Component {
 
       },
       onRecordCallback: e => {
-        console.log("recording", e);
+
       },
       errorCallback: err => {
-        console.log("error", err);
+
       },
       backgroundColor: "rgba(237, 247, 249, 1)",
       strokeColor: "#03C9D7"

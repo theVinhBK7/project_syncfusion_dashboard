@@ -4,7 +4,7 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { Overview, Orders, Calendar, Employees, Stacked, Pyramid, Customers, Kanban, Line, Area, Bar, Pie, Financial, ColorPicker, ColorMapping, Editor, Record, Upload } from './pages';
+import { Overview, Orders, Calendar, Employees, Stacked, Pyramid, AudioList, Kanban, Line, Area, Bar, Pie, Financial, ColorPicker, ColorMapping, Editor, Record, Upload } from './pages';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import './App.css';
@@ -26,7 +26,6 @@ const Main = () => {
   let currentUser = localStorage.getItem("accessToken");
   const navigate = useNavigate(); 
 
-  console.log("🚀 ~ file: App.js:21 ~ App ~ currentUser", currentUser)
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
     const currentThemeMode = localStorage.getItem('themeMode');
@@ -37,11 +36,10 @@ const Main = () => {
         function (response)
           {
             if (response['Success'] === 'Token is vailid'){
-              console.log("Token vailid");
+
             }
             else{
               localStorage.setItem("accessToken","");
-              console.log('invalid token, redirect to login page');
               navigate(`/login`);
             }
           }
@@ -104,7 +102,7 @@ const Main = () => {
                   {/* pages  */}
                   <Route path="/orders" element={<Orders />} />
                   <Route path="/employees" element={<Employees />} />
-                  <Route path="/customers" element={<Customers />} />
+                  <Route path="/audiolist" element={<AudioList/>} />
 
                   {/* apps  */}
                   <Route path="/kanban" element={<Kanban />} />

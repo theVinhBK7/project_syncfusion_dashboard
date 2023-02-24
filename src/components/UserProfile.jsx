@@ -15,7 +15,6 @@ const UserProfile = () => {
   const username = localStorage.getItem("username");
 
   function logoutHandle() {
-    console.log('logging out');
     logout(localStorage.getItem("accessToken"));
     navigate("/login");
     localStorage.setItem("accessToken","")

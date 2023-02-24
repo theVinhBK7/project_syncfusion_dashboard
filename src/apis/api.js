@@ -20,6 +20,7 @@ export const speechToText = async (formData) => {
     })
 }
 
+
 export const logout = async (data) => {
   const url = "/logout";
   return axios.post(url, JSON.stringify({'token':data}),{
@@ -46,5 +47,10 @@ axios.interceptors.response.use(response => {
 
 export const checkValidToken = async (data) => {
   const url = "/check_token";
+  return axios.post(url, data)
+};
+
+export const getListAudio = async (data) => {
+  const url = "/get_list";
   return axios.post(url, data)
 };

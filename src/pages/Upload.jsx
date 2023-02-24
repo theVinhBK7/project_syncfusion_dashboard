@@ -34,15 +34,11 @@ function Upload() {
 
     speechToText(formData, userToken)
       .then((response) => {
-        // setUploadMessage(response.data.message);
-          // console.log(response);
           setMessages(messages => (
             [...messages, response.Result]
             ));
-        // return uploadFilesService.getFiles();
       })
       .then((files) => {
-        // setFileInfos(files.data);
       })
       .catch(() => {
         setProgress(0);

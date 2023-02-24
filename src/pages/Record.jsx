@@ -11,8 +11,6 @@ function Record() {
   const { currentColor, currentMode } = useStateContext();
   const [messages, setMessages] = useState([]);
   const userToken = localStorage.getItem("accessToken");
-
-  console.log(messages)
   
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
